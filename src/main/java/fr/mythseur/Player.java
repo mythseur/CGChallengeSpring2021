@@ -3,7 +3,7 @@ package fr.mythseur;
 import java.util.Scanner;
 
 
-class Player {
+public class Player {
     public static void main(String args[]) {
         Scanner in = new Scanner(System.in);
 

@@ -7,14 +7,14 @@ import java.util.Optional;
 
 
 public class Game {
-    int day;
-    int nutrients;
-    List<Cell> board;
-    List<Action> possibleActions;
-    List<Tree> trees;
-    int mySun, opponentSun;
-    int myScore, opponentScore;
-    boolean opponentIsWaiting;
+    public int day;
+    public int nutrients;
+    public List<Cell> board;
+    public List<Action> possibleActions;
+    public List<Tree> trees;
+    public int mySun, opponentSun;
+    public int myScore, opponentScore;
+    public boolean opponentIsWaiting;
 
     public Game() {
         board = new ArrayList<>();
@@ -22,7 +22,7 @@ public class Game {
         trees = new ArrayList<>();
     }
 
-    Action getNextAction() {
+    public Action getNextAction() {
         Optional<Action> maxTreeSize3 = possibleActions.stream().filter(action -> action.type == EAction.COMPLETE).max(Comparator.comparingInt(action -> board.get(action.targetCellIdx).richess));
         if (maxTreeSize3.isPresent())
             return maxTreeSize3.get();

@@ -3,7 +3,7 @@ package fr.mythseur;
 
 public class Action {
 
-    static Action parse(String action) {
+    public static Action parse(String action) {
         String[] parts = action.split(" ");
         switch (EAction.valueOf(parts[0])) {
             case WAIT:
@@ -17,9 +17,9 @@ public class Action {
         }
     }
 
-    EAction type;
-    Integer targetCellIdx;
-    Integer sourceCellIdx;
+    public EAction type;
+    public Integer targetCellIdx;
+    public Integer sourceCellIdx;
 
     public Action(EAction type, Integer sourceCellIdx, Integer targetCellIdx) {
         this.type = type;
