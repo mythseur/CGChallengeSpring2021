@@ -12,4 +12,16 @@ public class Tree {
         this.isMine = isMine;
         this.isDormant = isDormant;
     }
+
+    public void grow() {
+        size++;
+    }
+
+    public void setDormant() {
+        isDormant = true;
+    }
+
+    public void reset() {
+        isDormant = false;
+    }
 }
