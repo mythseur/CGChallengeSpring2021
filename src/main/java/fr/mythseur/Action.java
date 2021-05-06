@@ -45,4 +45,14 @@ public class Action {
         }
         return String.format("%s %d", type, targetCellIdx);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Action) {
+            Action action = (Action) obj;
+            return action.type == type && action.sourceCellIdx.equals(sourceCellIdx) && action.targetCellIdx.equals(targetCellIdx);
+
+        }
+        return false;
+    }
 }
