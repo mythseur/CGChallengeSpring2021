@@ -1,17 +1,20 @@
 package fr.mythseur;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
-class Game {
-    int day;
-    int nutrients;
-    List<Cell> board;
-    List<Action> possibleActions;
-    List<Tree> trees;
-    int mySun, opponentSun;
-    int myScore, opponentScore;
-    boolean opponentIsWaiting;
+
+public class Game {
+    public int day;
+    public int nutrients;
+    public List<Cell> board;
+    public List<Action> possibleActions;
+    public List<Tree> trees;
+    public int mySun, opponentSun;
+    public int myScore, opponentScore;
+    public boolean opponentIsWaiting;
 
     public Game() {
         board = new ArrayList<>();

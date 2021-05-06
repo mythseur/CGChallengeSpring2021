@@ -1,10 +1,10 @@
 package fr.mythseur;
 
-class Tree {
-    int cellIndex;
-    int size;
-    boolean isMine;
-    boolean isDormant;
+public class Tree {
+    public int cellIndex;
+    public int size;
+    public boolean isMine;
+    public boolean isDormant;
 
     public Tree(int cellIndex, int size, boolean isMine, boolean isDormant) {
         this.cellIndex = cellIndex;
