@@ -1,6 +1,6 @@
 package fr.mythseur;
 
-class Tree {
+public class Tree {
     int cellIndex;
     int size;
     boolean isMine;

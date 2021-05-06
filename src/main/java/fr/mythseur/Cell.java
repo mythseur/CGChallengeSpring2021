@@ -1,6 +1,6 @@
 package fr.mythseur;
 
-class Cell {
+public class Cell {
     int index;
     int richess;
     int[] neighbours;

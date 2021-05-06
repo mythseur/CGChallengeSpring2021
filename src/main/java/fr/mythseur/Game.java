@@ -1,9 +1,12 @@
 package fr.mythseur;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
-class Game {
+
+public class Game {
     int day;
     int nutrients;
     List<Cell> board;
@@ -20,8 +23,8 @@ class Game {
     }
 
     Action getNextAction() {
-        // TODO: write your algorithm here
-        return possibleActions.get(0);
+        Optional<Action> max = possibleActions.stream().filter(action -> action.type == EAction.COMPLETE).max(Comparator.comparingInt(action -> board.get(action.targetCellIdx).richess));
+        return max.orElseGet(() -> possibleActions.get(0));
     }
 
 }
