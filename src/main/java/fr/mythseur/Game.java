@@ -1,7 +1,9 @@
 package fr.mythseur;
 
-import javax.naming.Reference;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class Game {
@@ -19,6 +21,7 @@ public class Game {
         board = new ArrayList<>();
         possibleActions = new ArrayList<>();
         trees = new ArrayList<>();
+        shadows = new HashMap<>();
     }
 
     public Action getNextAction() {

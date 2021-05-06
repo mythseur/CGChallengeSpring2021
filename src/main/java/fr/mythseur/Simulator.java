@@ -4,22 +4,24 @@ public class Simulator {
 
     public static final int[] TREE_BASE_COST = new int[]{0, 1, 3, 7};
 
-    public static Game doAction(Action action, Game game) {
+    public static void doAction(Action action, Game game) {
         switch (action.type) {
             case GROW:
                 doGrow(action, game);
+                break;
             case SEED:
                 doSeed(action, game);
+                break;
             case COMPLETE:
                 doComplete(action, game);
+                break;
             case WAIT:
-                doWait(action, game);
+                doWait(game);
+                break;
         }
-
-        return game;
     }
 
-    private static void doWait(Action action, Game game) {
+    private static void doWait(Game game) {
         //TODO : Passer un jour, on ne fait un Wait que quand plus rien à faire
         game.trees.forEach(Tree::reset);
         game.day += 1;
@@ -55,6 +57,9 @@ public class Simulator {
 
         Tree tree = new Tree(action.targetCellIdx, 0, true, true);
         game.trees.add(tree);
+
+        Tree tree1 = game.trees.get(action.sourceCellIdx);
+        tree1.setDormant();
     }
 
     private static int getSeedCost(Game game) {
@@ -71,7 +76,11 @@ public class Simulator {
         targetTree.setDormant();
     }
 
-    private static int getCostFor(int size, Game game) {
+    public static int getCostFor(int size, Game game) {
+        int targetSize = size + 1;
+        if (targetSize > 3) {
+            return 4;
+        }
         int baseCost = TREE_BASE_COST[size];
         int count = (int) game.trees.stream().filter(tree -> tree.isMine && tree.size == size).count();
         return baseCost + count;
