@@ -14,7 +14,6 @@ public class ActionGenerator {
         List<Action> seedActions = new ArrayList<>();
         game.trees.stream().filter(tree -> tree.isMine)
                 .forEach(tree -> {
-                    //TODO Mettre des Seeds
                     //for all Cells atteignable dans la range, ajouter un Seed
                     if (!tree.isDormant) {
                         if (tree.size > 0 && game.mySun >= seedCost) {

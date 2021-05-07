@@ -49,12 +49,17 @@ public class Game {
             }
 
         }
-        // TODO: MONTE-CARLO ALEATOIRE, on wait quand plus rien
-        // TODO : Remplir la liste sur la base du referee
         return bestAction;
     }
 
     private double score(Game copyGame) {
+
+        //TODO : C'est bien aussi les cases au centre
+        //TODO : Attention à ne pas avoir trop d'une même valeur pour pas bouffer trop de soleils.
+        //TODO : Ca m'arrive de pas avoir assez de temps tour 2
+        //TODO : LES PERFS (nb de tries diminuent au fil du temps)
+
+
         double nbTrees = copyGame.trees.size();
         List<Tree> treeStream = copyGame.trees.stream().filter(tree -> tree.isMine).collect(Collectors.toList());
         double myTrees = treeStream.size();
