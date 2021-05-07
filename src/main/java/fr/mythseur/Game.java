@@ -1,6 +1,8 @@
 package fr.mythseur;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 public class Game {
@@ -24,10 +26,11 @@ public class Game {
     public Action getNextAction(long startTime, Game copyGame, boolean firstTurn) {
         Action bestAction = new Action(EAction.WAIT, null, null);
         double bestScore = Double.NEGATIVE_INFINITY;
+        int tries = 0;
         while (System.currentTimeMillis() - startTime < (firstTurn ? 995 : 95)) {
             this.copy(copyGame);
             Action currentAction = null;
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 20; i++) {
                 List<Action> possibleMoves = ActionGenerator.getPossibleMoves(copyGame);
                 Collections.shuffle(possibleMoves);
                 Simulator.doAction(possibleMoves.get(0), copyGame);
@@ -35,7 +38,10 @@ public class Game {
                     currentAction = possibleMoves.get(0);
             }
 
+
             double score = score(copyGame);
+
+            tries++;
 
             if (score > bestScore) {
                 bestScore = score;
@@ -49,7 +55,17 @@ public class Game {
     }
 
     private double score(Game copyGame) {
-        return copyGame.myScore;
+        double nbTrees = copyGame.trees.size();
+        List<Tree> treeStream = copyGame.trees.stream().filter(tree -> tree.isMine).collect(Collectors.toList());
+        double myTrees = treeStream.size();
+
+        double treesScore = myTrees / nbTrees;
+
+        double Treesize = treeStream.stream().mapToDouble(tree -> tree.size).sum() / (3 * myTrees);
+
+        double richeness = treeStream.stream().map(tree -> copyGame.board.get(tree.cellIndex)).mapToDouble(cell -> cell.richess).sum() / (4 * myTrees);
+
+        return ((copyGame.myScore * 4) + treesScore + (Treesize * 4) + (richeness * 2)) / 11;
     }
 
     public void computeShadows() {
@@ -57,7 +73,8 @@ public class Game {
         trees.forEach(tree -> {
             for (int i = 1; i <= tree.size; i++) {
                 Cell neighbor = getNeighbor(tree.cellIndex, day % 6, i);
-                shadows.compute(neighbor.index, (key, value) -> value == null ? tree.size : Math.max(value, tree.size));
+                if (neighbor != null)
+                    shadows.compute(neighbor.index, (key, value) -> value == null ? tree.size : Math.max(value, tree.size));
             }
         });
     }
@@ -66,8 +83,11 @@ public class Game {
         Cell currentCell = board.get(cellIndex);
 
         for (int i = 0; i <= dist; i++) {
-            if (i > 0)
-                currentCell = board.get(currentCell.neighbours[orientation]);
+            int neighbour = currentCell.neighbours[orientation];
+            if (neighbour != -1)
+                currentCell = board.get(neighbour);
+            else
+                return null;
         }
         return currentCell;
     }
@@ -83,7 +103,7 @@ public class Game {
 
         for (int i = 0; i < board.size(); i++) {
             Cell cell = board.get(i);
-            if (game.board.isEmpty()) {
+            if (game.board.size() == i) {
                 game.board.add(new Cell(cell));
             } else {
                 game.board.get(i).update(cell);

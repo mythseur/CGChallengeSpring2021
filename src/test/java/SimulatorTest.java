@@ -14,18 +14,18 @@ public class SimulatorTest {
 
     @Test
     public void testComplete() {
-        game.trees.add(new Tree(0, 3, true, false));
-        Action action = new Action(EAction.COMPLETE, null, 0);
+        game.trees.add(new Tree(19, 3, true, false));
+        Action action = new Action(EAction.COMPLETE, null, 19);
         Simulator.doAction(action, game);
         Assert.assertTrue(game.trees.isEmpty());
         Assert.assertEquals(6, game.mySun);
-        Assert.assertEquals(24, game.myScore);
+        Assert.assertEquals(20, game.myScore);
     }
 
     @Test
     public void testGrow() {
-        game.trees.add(new Tree(0, 2, true, false));
-        Action action = new Action(EAction.GROW, null, 0);
+        game.trees.add(new Tree(19, 2, true, false));
+        Action action = new Action(EAction.GROW, null, 19);
         Simulator.doAction(action, game);
         Assert.assertEquals(3, game.trees.get(0).size);
         Assert.assertTrue(game.trees.get(0).isDormant);
@@ -34,8 +34,8 @@ public class SimulatorTest {
 
     @Test
     public void testSeed() {
-        game.trees.add(new Tree(0, 2, true, false));
-        Action action = new Action(EAction.SEED, 0, 1);
+        game.trees.add(new Tree(19, 2, true, false));
+        Action action = new Action(EAction.SEED, 19, 7);
         Simulator.doAction(action, game);
         Assert.assertEquals(2, game.trees.size());
         Assert.assertTrue(game.trees.get(0).isDormant);

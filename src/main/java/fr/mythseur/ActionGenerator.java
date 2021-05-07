@@ -11,6 +11,7 @@ public class ActionGenerator {
         int seedCost = Simulator.getCostFor(0, game);
 
         Set<Integer> collect = game.trees.stream().map(tree -> tree.cellIndex).collect(Collectors.toSet());
+        List<Action> seedActions = new ArrayList<>();
         game.trees.stream().filter(tree -> tree.isMine)
                 .forEach(tree -> {
                     //TODO Mettre des Seeds
@@ -19,7 +20,7 @@ public class ActionGenerator {
                         if (tree.size > 0 && game.mySun >= seedCost) {
                             for (Cell cell : getCellsInRange(tree, game)) {
                                 if (!collect.contains(cell.index)) {
-                                    actions.add(new Action(EAction.SEED, tree.cellIndex, cell.index));
+                                    seedActions.add(new Action(EAction.SEED, tree.cellIndex, cell.index));
                                 }
                             }
                         }
@@ -34,6 +35,13 @@ public class ActionGenerator {
                         }
                     }
                 });
+
+        List<Action> collect1 = seedActions.stream().sorted(Comparator.comparingInt(action -> game.board.get(action.targetCellIdx).richess)).collect(Collectors.toList());
+        if (!collect1.isEmpty()) {
+            collect1 = collect1.subList(0, Math.min(5, collect1.size()));
+            actions.addAll(collect1);
+        }
+
 
         if (actions.isEmpty())
             actions.add(new Action(EAction.WAIT, null, null));

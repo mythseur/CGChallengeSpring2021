@@ -34,7 +34,7 @@ public class Simulator {
     }
 
     private static void doComplete(Action action, Game game) {
-        Tree targetTree = game.trees.get(action.targetCellIdx);
+        Tree targetTree = game.trees.stream().filter(t -> t.cellIndex == action.targetCellIdx).findFirst().get();
         int growthCost = getCostFor(targetTree.size, game);
 
         game.mySun -= growthCost;
@@ -58,7 +58,7 @@ public class Simulator {
         Tree tree = new Tree(action.targetCellIdx, 0, true, true);
         game.trees.add(tree);
 
-        Tree tree1 = game.trees.get(action.sourceCellIdx);
+        Tree tree1 = game.trees.stream().filter(t -> t.cellIndex == action.sourceCellIdx).findFirst().get();
         tree1.setDormant();
     }
 
@@ -68,7 +68,7 @@ public class Simulator {
 
     private static void doGrow(Action action, Game game) {
 
-        Tree targetTree = game.trees.get(action.targetCellIdx);
+        Tree targetTree = game.trees.stream().filter(t -> t.cellIndex == action.targetCellIdx).findFirst().get();
         int growthCost = getCostFor(targetTree.size, game);
 
         game.mySun -= growthCost;
