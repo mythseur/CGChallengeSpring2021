@@ -4,10 +4,13 @@ import java.util.Scanner;
 
 
 public class Player {
+    private static boolean firstTurn = true;
+
     public static void main(String args[]) {
         Scanner in = new Scanner(System.in);
 
         Game game = new Game();
+        Game copyGame = new Game();
 
         int numberOfCells = in.nextInt();
         for (int i = 0; i < numberOfCells; i++) {
@@ -25,7 +28,8 @@ public class Player {
         }
 
         while (true) {
-            game.day = in.nextInt(); // the game lasts 24 days: 0-23
+            game.day = in.nextInt();
+            long startTime = System.currentTimeMillis();// the game lasts 24 days: 0-23
             game.nutrients = in.nextInt(); // the base score you gain from the next COMPLETE action
             game.mySun = in.nextInt(); // your sun points
             game.myScore = in.nextInt(); // your current score
@@ -52,11 +56,12 @@ public class Player {
             in.nextLine();
             for (int i = 0; i < numberOfPossibleActions; i++) {
                 String possibleAction = in.nextLine();
-                game.possibleActions.add(Action.parse(possibleAction));
+//                game.possibleActions.add(Action.parse(possibleAction));
             }
 
-            Action action = game.getNextAction();
+            Action action = game.getNextAction(startTime, copyGame, firstTurn);
             System.out.println(action);
+            firstTurn = false;
         }
     }
 }

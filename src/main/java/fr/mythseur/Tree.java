@@ -13,6 +13,13 @@ public class Tree {
         this.isDormant = isDormant;
     }
 
+    public Tree(Tree tree) {
+        this.cellIndex = tree.cellIndex;
+        this.size = tree.size;
+        this.isMine = tree.isMine;
+        this.isDormant = tree.isDormant;
+    }
+
     public void grow() {
         size++;
     }

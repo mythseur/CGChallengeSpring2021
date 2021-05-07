@@ -10,4 +10,16 @@ public class Cell {
         this.richess = richess;
         this.neighbours = neighbours;
     }
+
+    public Cell(Cell cell) {
+        this.index = cell.index;
+        this.richess = cell.richess;
+        this.neighbours = cell.neighbours;
+    }
+
+    public void update(Cell cell) {
+        this.index = cell.index;
+        this.richess = cell.richess;
+        this.neighbours = cell.neighbours;
+    }
 }
