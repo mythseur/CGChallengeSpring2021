@@ -19,7 +19,7 @@ public class ActionGenerator {
                     if (!tree.isDormant) {
                         if (tree.size > 0 && game.mySun >= seedCost) {
                             for (Cell cell : getCellsInRange(tree, game)) {
-                                if (!collect.contains(cell.index)) {
+                                if (!collect.contains(cell.index) && cell.richess != 0) {
                                     seedActions.add(new Action(EAction.SEED, tree.cellIndex, cell.index));
                                 }
                             }
